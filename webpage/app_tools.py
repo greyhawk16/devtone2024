@@ -73,7 +73,8 @@ def delete_session_db(token) -> str:
     db.session.commit()
     return token
 
-def lose_life_calc(datalist, select):   
+def lose_life_calc(datalist, select):  
+    datalist = list(map(int,datalist))
     return datalist[select] - max(datalist)
     
 

@@ -135,7 +135,7 @@ def loadingresult():
 		    'result': 'false',
 		    'lived': 'true'
 	    }
-    return render_template("loadingresult.html", token=token)
+    return render_template("loadingresult.html", token=token, select_number=select_number)
 
 
 @app.route('/loaded_start_action', methods=['POST'])
