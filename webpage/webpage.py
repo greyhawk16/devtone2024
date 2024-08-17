@@ -61,31 +61,31 @@ def gameover():
 def loaded_start():
     token = request.form['token']
     if token not in api_loaded_start:
-        return {
+        return jsonify({
             "session": token,
             "result" : "false"
-        }
+        })
 
-    return api_loaded_start[token]
+    return jsonify(api_loaded_start[token])
 
 @app.route('/loaded_problem', methods=['POST'])
 def loaded_problem():
     token = request.form['token']
     if token not in api_loaded_start:
-        return {
+        return jsonify({
             "session": token,
             "result" : "false"
-        }
+        })
 
-    return api_loaded_start[token]
+    return jsonify(api_loaded_start[token])
 
 @app.route('/loaded_result', methods=['POST'])
 def loaded_result():
     token = request.form['token']
     if token not in api_loaded_start:
-        return {
+        return jsonify({
             "session": token,
             "result" : "false"
-        }
+        })
 
-    return api_loaded_start[token]
+    return jsonify(api_loaded_start[token])
