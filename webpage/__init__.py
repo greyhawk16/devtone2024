@@ -16,7 +16,9 @@ def create_app():
     db.init_app(app)
 
     from .webpage import webpage
+    from .apis import apis
     app.register_blueprint(webpage, url_prefix='/')
+    app.register_blueprint(apis, url_prefix='/')
 
 
     from . import models

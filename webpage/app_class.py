@@ -1,4 +1,4 @@
-from models import SessionDB
+from .models import SessionDB
 
 
 class Session():
