@@ -75,7 +75,7 @@ def get_input(check: Check) -> Check:
     return check
 
 def next_level(problem: Problem) -> Problem:
-    problem.problem_number += 1
+    #problem.problem_number += 1
     selectable_items = random.sample(items_list, k=4)
     payload = f"이어지는 상황에 기존의 선택지 대신에 다음 4개의 {selectable_items}들을 제시해주십시오."
     #conversation_archive.append(payload)
