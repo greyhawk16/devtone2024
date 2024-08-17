@@ -10,9 +10,10 @@ class Session():
         self.option = [SessionDB.option1, SessionDB.option2, SessionDB.option3, SessionDB.option4]
         self.result = [int(SessionDB.result1), int(SessionDB.result2), int(SessionDB.result3), int(SessionDB.result4)]
         self.result_text = SessionDB.result_text
+        self.conv_archive = SessionDB.conv_archive
 
     @staticmethod
-    def create(token, problem_number, life, description, option, result, result_text):
+    def create(token, problem_number, life, description, option, result, result_text, conv_archive):
         return Session(
             token=token,
             problem_num=problem_number,
@@ -20,7 +21,8 @@ class Session():
             description=description,
             option=[option[0], option[1], option[2], option[3]],
             result=[result[0], result[1], result[2], result[3]],
-            result_text=result_text
+            result_text=result_text,
+            conv_archive = conv_archive
         )
 
     def update(self, SessionDB):
@@ -31,6 +33,7 @@ class Session():
         self.option = [SessionDB.option1, SessionDB.option2, SessionDB.option3, SessionDB.option4]
         self.result = [int(SessionDB.result1), int(SessionDB.result2), int(SessionDB.result3), int(SessionDB.result4)]
         self.result_text = SessionDB.result_text
+        self.conv_archive = SessionDB.conv_archive
     
     def to_session_db(self):
         return SessionDB(
@@ -46,10 +49,10 @@ class Session():
             result2=self.result[1],
             result3=self.result[2],
             result4=self.result[3],
-            result_text=self.result_text
+            result_text=self.result_text,
+            conv_archive = self.conv_archive
         )
     
-
 
 class Problem():
     def __init__(self, Session, select_number):
@@ -60,6 +63,7 @@ class Problem():
         self.option = Session.option
         self.token = Session.token
         self.select_number = select_number
+        self.conv_archive = Session.conv_archive
 
 class Check():
     def __init__(self, Session):
@@ -71,6 +75,7 @@ class Check():
         self.token = Session.token
         self.option = Session.option
         self.result = Session.result
+        self.conv_archive = Session.conv_archive
 
 class Start():
     def __init__(self, Session):
