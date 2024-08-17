@@ -103,6 +103,27 @@
     </section>
 </body>
 <script>
+
+    async function checkLoad() {
+        try {
+            const response = await fetch("/loaded_start_action", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({token: "{{token}}", seclect_num: "{{select_num}}"})
+            });
+            const data = response.json();
+            console.log(data)
+
+            const session = data.session;
+            const checkLoad = data.result;
+            const nextSession = data.next_session;
+
+        } catch (error) {
+            console.error("error : api not found"); //디버깅
+        }
+    }
     async function checkGameLoad(){
 
         try {
@@ -143,6 +164,7 @@
 
      window.onload = function() {
         checkGameLoad();
+        checkLoad();
      };
 </script>
 </html>
