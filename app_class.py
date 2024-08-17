@@ -9,7 +9,19 @@ class Session():
         self.description = SessionDB.description
         self.option = [SessionDB.option1, SessionDB.option2, SessionDB.option3, SessionDB.option4]
         self.result = [int(SessionDB.result1), int(SessionDB.result2), int(SessionDB.result3), int(SessionDB.result4)]
-        self.result_text = SessionDB.result_desc
+        self.result_text = SessionDB.result_text
+
+    @staticmethod
+    def create(token, problem_number, life, description, option, result, result_text):
+        return Session(
+            token=token,
+            problem_num=problem_number,
+            life=life,
+            description=description,
+            option=[option[0], option[1], option[2], option[3]],
+            result=[result[0], result[1], result[2], result[3]],
+            result_text=result_text
+        )
 
     def update(self, SessionDB):
         self.token = SessionDB.token
@@ -18,7 +30,7 @@ class Session():
         self.description = SessionDB.description
         self.option = [SessionDB.option1, SessionDB.option2, SessionDB.option3, SessionDB.option4]
         self.result = [int(SessionDB.result1), int(SessionDB.result2), int(SessionDB.result3), int(SessionDB.result4)]
-        self.result_text = SessionDB.result_desc
+        self.result_text = SessionDB.result_text
     
     def to_session_db(self):
         return SessionDB(
@@ -34,7 +46,7 @@ class Session():
             result2=self.result[1],
             result3=self.result[2],
             result4=self.result[3],
-            result_desc=self.result_text
+            result_text=self.result_text
         )
     
 
