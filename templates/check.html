@@ -29,12 +29,9 @@
           <div class="layout-content-container flex flex-col max-w-[500px] flex-1">
             <div class="grid grid-cols-[repeat(auto-fit,50px)] gap-3 p-4">
               <div class="flex flex-col gap-3">
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
-                  style='background-image: url("{{ url_for(\"static\", filename=image_url) }}");'
-                ></div>
               </div>
             </div>
+            <p class="text-[#1C160C] text-3xl font-normal leading-normal pb-3 pt-1 px-4">{{ '살았습니다!' if result_all else '틀렸습니다!' }}</p>
             <p class="text-[#1C160C] text-base font-normal leading-normal pb-3 pt-1 px-4">{{ description }}</p>
           </div>
         <div class="layout-content-container flex flex-col w-[360px]">
@@ -74,8 +71,9 @@
               <div class="gap-6 rounded bg-[#365163]"><div class="h-2 rounded bg-[#3CB371]" style="width: {{ result[3] }}%;"></div></div>
             </div>
           </div>
-          <form action="loadingproblem" name="submit_form" method="post">
+          <form action="{{ 'loadingproblem' if result_all else 'gameover' }}" name="submit_form" method="post">
             <input type="hidden" id="token" name="token" value="{{ token }}">
+            <input type="hidden" id="problem_number" name="problem_number" value="{{ problem_number }}">
             <div class="flex px-4 py-3 justify-end">
               <button
                 class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 flex-1 bg-[#1C160C] text-[#FFFFFF] text-base font-bold leading-normal tracking-[0.015em]"
