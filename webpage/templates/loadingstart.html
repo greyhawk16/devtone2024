@@ -104,52 +104,71 @@
     </section>
 </body>
 <script>
-    async function checkGameLoad(){
-        const token = document.getElementById("token").value;
+    async function checkLoad() {
         try {
-            const response = await fetch("/loaded_start", {
+            const response = await fetch("/loaded_start_action", {
                 method: 'POST',
-                headers:{
+                headers: {
                     'Content-Type': 'application/json'
                 },
-                body:JSON.stringify({token: "{{token}}"})
+                body: JSON.stringify({token: "{{token}}", "seclect_num": "{{select_num}}"})
             });
-
             const data = response.json();
             console.log(data)
 
             const session = data.session;
             const checkLoad = data.result;
 
-            const loadingInterval = setInterval(()=>{
-            if(checkLoad == "true"){
-                clearInterval(loadingInterval);
-                console.log("Loading complete! Redirecting...");
-                loadGame();
-            }
-            else if(checkLoad == "false"){
-                //로딩화면 계속
-                console.log("Loading fail! Loading...");
-            }
-            else{
-                //값 못받아올 시
-                console.error("Loading fail! Redirecting...");
-                clearInterval(loadingInterval);
-            }
-        },1000);
-
-        }
-        catch(error){
+        } catch (error) {
             console.error("error : api not found"); //디버깅
         }
-    }
-    function loadGame(){
-        // const sessionId = generateRandomString(10);
-        document.getElementById('loadinggame').submit();
-    }
 
-     window.onload = function() {
-        checkGameLoad();
-     };
+        async function checkGameLoad() {
+            const token = document.getElementById("token").value;
+            try {
+                const response = await fetch("/loaded_start", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({token: "{{token}}"})
+                });
+
+                const data = response.json();
+                console.log(data)
+
+                const session = data.session;
+                const checkLoad = data.result;
+
+
+                const loadingInterval = setInterval(() => {
+                    if (checkLoad == "true") {
+                        clearInterval(loadingInterval);
+                        console.log("Loading complete! Redirecting...");
+                        loadGame();
+                    } else if (checkLoad == "false") {
+                        //로딩화면 계속
+                        console.log("Loading fail! Loading...");
+                    } else {
+                        //값 못받아올 시
+                        console.error("Loading fail! Redirecting...");
+                        clearInterval(loadingInterval);
+                    }
+                }, 1000);
+
+            } catch (error) {
+                console.error("error : api not found"); //디버깅
+            }
+        }
+
+        function loadGame() {
+            // const sessionId = generateRandomString(10);
+            document.getElementById('loadinggame').submit();
+        }
+
+        window.onload = function () {
+            checkGameLoad();
+        };
+    }
 </script>
 </html>
