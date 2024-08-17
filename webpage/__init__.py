@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 
@@ -15,12 +15,12 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
 
-    from .models import SessionDB
-    create_database(app)
+    from .webpage import webpage
+    app.register_blueprint(webpage, url_prefix='/')
+
+
+    from . import models
+    with app.app_context():
+        db.create_all()
 
     return app
-    
-def create_database(app):
-    if not path.exists('website/' + DB_NAME):
-        db.create_all(app=app)
-        print('>>> Create DB')

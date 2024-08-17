@@ -8,7 +8,7 @@ session_length = 64
 def make_session_text():
     database = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
     while True:
-        result = random.choices(database, k=session_length)
+        result = ''.join(random.choices(database, k=session_length))
         check  = SessionDB.query.filter_by(token=result).first()
         if not check:
             break
