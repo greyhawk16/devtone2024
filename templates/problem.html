@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css"
+    />
+
+    <title>Problem {{ problem_number }}</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div
+      class="relative flex size-full min-h-screen flex-col bg-[#FFFFFF] group/design-root overflow-x-hidden"
+      style='display:table;--radio-dot-svg: url(&apos;data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(1,152,99)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3ccircle cx=%278%27 cy=%278%27 r=%273%27/%3e%3c/svg%3e&apos;); font-family: "NanumSquareBold", "Noto Sans", sans-serif;'
+    >
+      <div class="layout-container flex h-full grow flex-col" style="display:table-cell;vertical-align:middle;">
+        <header class="flex items-center justify-between whitespace-nowrap px-10 py-3"></header>
+        <div class="gap-1 px-6 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[500px] flex-1">
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+                  style='background-image: url("{{ image_url }}");'
+                ></div>
+              </div>
+            </div>
+            <p class="text-[#1C160C] text-base font-normal leading-normal pb-3 pt-1 px-4">{{ description }}</p>
+          </div>
+          <div class="layout-content-container flex flex-col w-[360px]">
+            <div class="flex flex-row justify-center">
+              <div class="text-left">HP</div>
+              <div class="text-right" style="width: 100%;">{{ problem_number }}번째 문제</div>
+            </div>
+            <div class="gap-6 rounded bg-[#365163]"><div class="h-2 rounded bg-[#DC143C]" style="width: {{ life }}%;"></div></div>
+          <form action="check" name="submit_form" method="post">
+              <div class="flex flex-col gap-3 p-4">
+                <label class="flex items-center gap-4 rounded-xl border border-solid border-[#E9DFCE] p-[15px]">
+                  <input
+                    type="radio"
+                    class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#019863] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#019863]"
+                    name="select_number"
+                    value="1"
+                    checked=""
+                  />
+                  <div class="flex grow flex-col"><p class="text-[#1C160C] text-sm font-medium leading-normal">{{ option_1 }}</p></div>
+                </label>
+                <label class="flex items-center gap-4 rounded-xl border border-solid border-[#E9DFCE] p-[15px]">
+                  <input
+                    type="radio"
+                    class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#019863] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#019863]"
+                    name="select_number"
+                    value="2"
+                  />
+                  <div class="flex grow flex-col"><p class="text-[#1C160C] text-sm font-medium leading-normal">{{ option_2 }}</p></div>
+                </label>
+                <label class="flex items-center gap-4 rounded-xl border border-solid border-[#E9DFCE] p-[15px]">
+                  <input
+                    type="radio"
+                    class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#019863] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#019863]"
+                    name="select_number"
+                    value="3"
+                  />
+                  <div class="flex grow flex-col"><p class="text-[#1C160C] text-sm font-medium leading-normal">{{ option_3 }}</p></div>
+                </label>
+                <label class="flex items-center gap-4 rounded-xl border border-solid border-[#E9DFCE] p-[15px]">
+                  <input
+                    type="radio"
+                    class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#019863] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#019863]"
+                    name="select_number"
+                    value="4"
+                  />
+                  <div class="flex grow flex-col"><p class="text-[#1C160C] text-sm font-medium leading-normal">{{ option_4 }}</p></div>
+                </label>
+              </div>
+              <input type="hidden" id="token" name="token" value="{{ token }}">
+              <div class="flex px-4 py-3 justify-end">
+                <button
+                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 flex-1 bg-[#019863] text-[#FFFFFF] text-base font-bold leading-normal tracking-[0.015em]"
+                >
+                  <span class="truncate">확인하기</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
