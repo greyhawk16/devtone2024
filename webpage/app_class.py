@@ -58,37 +58,20 @@ class Session():
         )
     
 
-class Problem():
-    def __init__(self, Session):
-        self.problem_num = Session.problem_num
-        self.life = Session.life
-        self.image_url = ""
-        self.description = Session.description
-        self.option = Session.option
-        self.token = Session.token
-        self.conv_archive = Session.conv_archive
-        self.image_num = Session.image_num
-        #self.conversation_archive = 
+class Problem(Session):
+    def __init__(self, session: Session):
+        super().__init__(session.to_session_db())
 
-class Check():
-    def __init__(self, Session, select_number):
-        self.problem_num = Session.problem_num
-        self.life = Session.life
-        self.result_all = False
-        self.result_text = Session.result_text
-        self.option = Session.option
-        self.token = Session.token
-        self.option = Session.option
-        self.result = Session.result
-        self.conv_archive = Session.conv_archive
-        self.image_num = Session.image_num
+class Check(Session):
+    def __init__(self, session: Session, select_number: int):
+        super().__init__(session.to_session_db())
         self.select_number = select_number
 
-class Start():
-    def __init__(self, Session):
-        self.token = Session.token
 
-class Gameover():
-    def __init__(self, Session):
-        self.token = Session.token
-        self.result_text = Session.result_text
+class Start(Session):
+    def __init__(self, session: Session):
+        super().__init__(session.to_session_db())
+
+class Gameover(Session):
+    def __init__(self, session: Session):
+        super().__init__(session.to_session_db())
