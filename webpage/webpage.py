@@ -66,7 +66,7 @@ def loaded_start():
             "result" : "false"
         }
 
-    return api_loaded_start[token]
+    return jsonify(api_loaded_start[token])
 
 @app.route('/loaded_problem', methods=['POST'])
 def loaded_problem():
@@ -77,7 +77,7 @@ def loaded_problem():
             "result" : "false"
         }
 
-    return api_loaded_start[token]
+    return jsonify(api_loaded_start[token])
 
 @app.route('/loaded_result', methods=['POST'])
 def loaded_result():
@@ -88,4 +88,4 @@ def loaded_result():
             "result" : "false"
         }
 
-    return api_loaded_start[token]
+    return jsonify(api_loaded_start[token])
