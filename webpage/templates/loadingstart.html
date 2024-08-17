@@ -154,7 +154,7 @@
             clearInterval(loadingInterval); // Stop the interval on error
             console.error("Error: API not found or request failed.");
         }
-    }, 5000); // Check every 5 seconds
+    }, 1000); // Check every 5 seconds
 
 
         function loadGame() {
@@ -163,8 +163,8 @@
         }
 
         window.onload = function () {
-            checkGameLoad();
             checkLoad();
+            checkGameLoad();
         };
 </script>
 </html>
