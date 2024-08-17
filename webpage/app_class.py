@@ -68,6 +68,7 @@ class Problem():
         self.token = Session.token
         self.conv_archive = Session.conv_archive
         self.image_num = Session.image_num
+        #self.conversation_archive = 
 
 class Check():
     def __init__(self, Session, select_number):
