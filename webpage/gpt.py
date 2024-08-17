@@ -58,16 +58,16 @@ def start_game(problem: Problem) -> Problem:
     problem.option[1] = selectable_items[1]
     problem.option[2] = selectable_items[2]
     problem.option[3] = selectable_items[3]
-    problem.conversation_archive.append(payload)
-    problem.conversation_archive.append(game_info.situation_discription)
+    problem.conv_archive.append(payload)
+    problem.conv_archive.append(game_info.situation_discription)
     return problem
 
 def get_input(check: Check) -> Check:
     payload = f"{check.select_number}, 각 선택지에 따른 생존 확률과, 플레이어의 선택에 따른 결과를 말해 주십시오."
-    check.conversation_archive.append(payload)
-    game_info = openai_conn(''.join(i for i in check.conversation_archive))
+    check.conv_archive.append(payload)
+    game_info = openai_conn(''.join(i for i in check.conv_archive))
     game_info = openai_conn(payload)
-    check.conversation_archive.append(game_info.situation_discription)
+    check.conv_archive.append(game_info.situation_discription)
     check.option[0] = game_info.tool1_description
     check.option[1] = game_info.tool2_description
     check.option[2] = game_info.tool3_description
@@ -78,8 +78,8 @@ def next_level(problem: Problem) -> Problem:
     #problem.problem_number += 1
     selectable_items = random.sample(items_list, k=4)
     payload = f"이어지는 상황에 기존의 선택지 대신에 다음 4개의 {selectable_items}들을 제시해주십시오."
-    problem.conversation_archive.append(payload)
-    game_info = openai_conn(''.join(i for i in problem.conversation_archive))
+    problem.conv_archive.append(payload)
+    game_info = openai_conn(''.join(i for i in problem.conv_archive))
     game_info = openai_conn(payload)
     problem.life = game_info.player_life
     problem.description = game_info.situation_discription
@@ -87,7 +87,7 @@ def next_level(problem: Problem) -> Problem:
     problem.option[1] = selectable_items[1]
     problem.option[2] = selectable_items[2]
     problem.option[3] = selectable_items[3]
-    result = openai_conn(''.join(i for i in problem.conversation_archive)).situation_discription
-    problem.conversation_archive.append(result)
-    problem.conversation_archive.append(game_info.situation_discription)
+    result = openai_conn(''.join(i for i in problem.conv_archive)).situation_discription
+    problem.conv_archive.append(result)
+    problem.conv_archive.append(game_info.situation_discription)
     return problem
