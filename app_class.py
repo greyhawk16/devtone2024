@@ -11,9 +11,10 @@ class Session():
         self.result = [int(SessionDB.result1), int(SessionDB.result2), int(SessionDB.result3), int(SessionDB.result4)]
         self.result_text = SessionDB.result_text
         self.conv_archive = SessionDB.conv_archive
+        self.image_num = SessionDB.image_num
 
     @staticmethod
-    def create(token, problem_num, life, description, option, result, result_text, conv_archive):
+    def create(token, problem_num, life, description, option, result, result_text, conv_archive, image_num):
         return Session(
             token = token,
             problem_num = problem_num,
@@ -22,7 +23,8 @@ class Session():
             option = [option[0], option[1], option[2], option[3]],
             result = [result[0], result[1], result[2], result[3]],
             result_text = result_text,
-            conv_archive = conv_archive
+            conv_archive = conv_archive,
+            image_num = image_num
         )
 
     def update(self, SessionDB):
@@ -34,6 +36,7 @@ class Session():
         self.result = [int(SessionDB.result1), int(SessionDB.result2), int(SessionDB.result3), int(SessionDB.result4)]
         self.result_text = SessionDB.result_text
         self.conv_archive = SessionDB.conv_archive
+        self.image_num = SessionDB.image_num
     
     def to_session_db(self):
         return SessionDB(
@@ -50,7 +53,8 @@ class Session():
             result3=self.result[2],
             result4=self.result[3],
             result_text=self.result_text,
-            conv_archive = self.conv_archive
+            conv_archive = self.conv_archive,
+            image_num=self.image_num
         )
     
 
@@ -64,6 +68,7 @@ class Problem():
         self.token = Session.token
         self.select_number = select_number
         self.conv_archive = Session.conv_archive
+        self.image_num = Session.image_num
 
 class Check():
     def __init__(self, Session):
@@ -76,6 +81,7 @@ class Check():
         self.option = Session.option
         self.result = Session.result
         self.conv_archive = Session.conv_archive
+        self.image_num = Session.image_num
 
 class Start():
     def __init__(self, Session):
