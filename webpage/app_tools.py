@@ -62,13 +62,12 @@ def update_session_db(token, **target) -> None:
     db.session.add(session)
     db.session.commit()
 
-def update_session_db_ses(sesorigin: Session) -> None:
-    
-    db.session.add(sesorigin.to_session_db())
+def update_session_db_ses(sesorigin: SessionDB) -> None:
+    delete_session_db(sesorigin.token)
+    db.session.add(sesorigin)
     db.session.commit()
 
 def delete_session_db(token) -> str:
-    
     session = read_session_db(token)
     db.session.delete(session)
     db.session.commit()

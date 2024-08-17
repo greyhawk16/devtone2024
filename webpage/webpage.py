@@ -62,7 +62,7 @@ def loaded_start():
     token = request.json['token']
     if token not in api_loaded_start:
         return jsonify({
-            "session": token,
+            "session": 0,
             "result" : "false"
         })
 
@@ -73,7 +73,7 @@ def loaded_problem():
     token = request.json['token']
     if token not in api_loaded_start:
         return jsonify({
-            "session": token,
+            "session": 0,
             "result" : "false"
         })
 
@@ -84,8 +84,8 @@ def loaded_result():
     token = request.json['token']
     if token not in api_loaded_start:
         return jsonify({
-            "session": token,
-            "result" : "false"
+            "session": 0,
+            "result" : "false",
         })
 
     return jsonify(api_loaded_start[token])

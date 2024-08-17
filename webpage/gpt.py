@@ -10,14 +10,14 @@ dotenv.load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 situations_list = []
-with open('situation_data.csv', 'r', encoding='utf-8') as file:
+with open('D:\\BOB\\TrackStudy\\개발톤\\devtone2024\\webpage\\situation_data.csv', 'r', encoding='utf-8') as file:
     reader = csv.reader(file)
     for row in reader:
         situations_list.append(row[0])
     file.close()
 
 items_list = []
-with open('items_data.csv', 'r', encoding='utf-8') as file:
+with open('D:\\BOB\\TrackStudy\\개발톤\\devtone2024\\webpage\\items_data.csv', 'r', encoding='utf-8') as file:
     reader = csv.reader(file)
     for row in reader:
         items_list.append(row[0])
@@ -49,6 +49,7 @@ def openai_conn(prompt):
 
 def start_game(problem: Problem) -> Problem:
     pic_num = random.randint(0, len(situations_list)-1)
+    problem.image_num = pic_num+1
     current_situation = situations_list[pic_num]
     selectable_items = random.sample(items_list, k=4)
     payload = f"{current_situation} 상황으로 텍스트 게임을 진행하겠습니다. 플레이어는 살아남기 힘든 상황에 놓여있습니다. 이번 위기 상황에는 {selectable_items}를 부가적인 설명 없이 제시해 주십시오. 플레이어는 반드시 1,2,3,4로만 입력해야 합니다. 플레이어가 선택하면 해당 물건을 골랐을 때 주인공의 체력 변화를 알려주십시오. 이때 체력은 최대치 100을 넘을 수 없으며 변화량은 +-90까지 소수점 한자리 단위로 일어날 수 있습니다. 체력 0이 되면 사망으로 게임오버되고, 최종목표를 달성하면 승리하게 됩니다. 바로 구체적인 상황을 생성해주십시오."
@@ -58,16 +59,16 @@ def start_game(problem: Problem) -> Problem:
     problem.option[1] = selectable_items[1]
     problem.option[2] = selectable_items[2]
     problem.option[3] = selectable_items[3]
-    problem.conv_archive.append(payload)
-    problem.conv_archive.append(game_info.situation_discription)
+    problem.conv_archive+=payload
+    problem.conv_archive+=game_info.situation_discription
     return problem
 
 def get_input(check: Check) -> Check:
     payload = f"{check.select_number}, 각 선택지에 따른 생존 확률과, 플레이어의 선택에 따른 결과를 말해 주십시오."
-    check.conv_archive.append(payload)
-    game_info = openai_conn(''.join(i for i in check.conv_archive))
+    check.conv_archive+=payload
+    game_info = openai_conn(check.conv_archive)
     game_info = openai_conn(payload)
-    check.conv_archive.append(game_info.situation_discription)
+    check.conv_archive+=game_info.situation_discription
     check.option[0] = game_info.tool1_description
     check.option[1] = game_info.tool2_description
     check.option[2] = game_info.tool3_description

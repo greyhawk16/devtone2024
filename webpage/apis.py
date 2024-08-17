@@ -20,6 +20,7 @@ class StartWorker():
 
     def run(self):
         global api_loaded_start
+        print("runned loaded start")
         session = create_session(token=self.token, problem_num=1, life=100)
         nextset = gpt.start_game(Problem(session)).to_session_db()
 
@@ -27,7 +28,7 @@ class StartWorker():
 
         api_loaded_start[self.token] = {
             'session': self.token,
-            'result':  "false",
+            'result':  "true",
 	    }
 
         global api_loaded_problem
