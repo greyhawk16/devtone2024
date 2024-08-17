@@ -13,7 +13,7 @@
   <body>
     <div
       class="relative flex size-full min-h-screen flex-col bg-[#FFFFFF] group/design-root overflow-x-hidden"
-      style='display:table;--radio-dot-svg: url(&apos;data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(1,152,99)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3ccircle cx=%278%27 cy=%278%27 r=%273%27/%3e%3c/svg%3e&apos;); font-family: "NanumSquareBold", "Noto Sans", sans-serif;'
+      style='display:table;--radio-dot-svg: url(&apos;data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(28, 22, 12)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3ccircle cx=%278%27 cy=%278%27 r=%273%27/%3e%3c/svg%3e&apos;); font-family: "NanumSquareBold", "Noto Sans", sans-serif;'
     >
       <div class="layout-container flex h-full grow flex-col" style="display:table-cell;vertical-align:middle;">
         <header class="flex items-center justify-between whitespace-nowrap px-10 py-3"></header>
@@ -31,8 +31,8 @@
           </div>
           <div class="layout-content-container flex flex-col w-[360px]">
             <div class="flex flex-row justify-center">
-              <div class="text-left">HP</div>
-              <div class="text-right" style="width: 100%;">{{ problem_number }}번째 문제</div>
+              <div class="text-left text-[#1C160C]">HP</div>
+              <div class="text-right text-[#1C160C]" style="width: 100%;">{{ problem_number }}번째 문제</div>
             </div>
             <div class="gap-6 rounded bg-[#365163]"><div class="h-2 rounded bg-[#DC143C]" style="width: {{ life }}%;"></div></div>
           <form action="check" name="submit_form" method="post">
@@ -40,7 +40,7 @@
                 <label class="flex items-center gap-4 rounded-xl border border-solid border-[#E9DFCE] p-[15px]">
                   <input
                     type="radio"
-                    class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#019863] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#019863]"
+                    class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#1C160C] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#1C160C]"
                     name="select_number"
                     value="1"
                     checked=""
@@ -50,7 +50,7 @@
                 <label class="flex items-center gap-4 rounded-xl border border-solid border-[#E9DFCE] p-[15px]">
                   <input
                     type="radio"
-                    class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#019863] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#019863]"
+                    class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#1C160C] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#1C160C]"
                     name="select_number"
                     value="2"
                   />
@@ -59,7 +59,7 @@
                 <label class="flex items-center gap-4 rounded-xl border border-solid border-[#E9DFCE] p-[15px]">
                   <input
                     type="radio"
-                    class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#019863] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#019863]"
+                    class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#1C160C] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#1C160C]"
                     name="select_number"
                     value="3"
                   />
@@ -68,7 +68,7 @@
                 <label class="flex items-center gap-4 rounded-xl border border-solid border-[#E9DFCE] p-[15px]">
                   <input
                     type="radio"
-                    class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#019863] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#019863]"
+                    class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#1C160C] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#1C160C]"
                     name="select_number"
                     value="4"
                   />
@@ -78,7 +78,7 @@
               <input type="hidden" id="token" name="token" value="{{ token }}">
               <div class="flex px-4 py-3 justify-end">
                 <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 flex-1 bg-[#019863] text-[#FFFFFF] text-base font-bold leading-normal tracking-[0.015em]"
+                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 flex-1 bg-[#1C160C] text-[#FFFFFF] text-base font-bold leading-normal tracking-[0.015em]"
                 >
                   <span class="truncate">확인하기</span>
                 </button>
