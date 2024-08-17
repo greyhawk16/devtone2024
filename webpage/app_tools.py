@@ -75,7 +75,11 @@ def delete_session_db(token) -> str:
     return token
 
 def lose_life_calc(datalist, select):
+<<<<<<< HEAD
     
     return datalist[select] - max(datalist)
     
 
+=======
+    return datalist[select] - max(datalist)
+>>>>>>> 5bdb38efae1b39c77c9d05acf652699d17ee30d3
