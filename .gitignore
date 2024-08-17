@@ -5,3 +5,4 @@
 */__pycache__/
 webpage/main.py
 */.venv
+instance/database.db
