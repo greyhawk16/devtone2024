@@ -28,10 +28,10 @@ def openai_conn(prompt):
     class game_information(BaseModel):
         player_life: int
         situation_discription: str
-        option1_description: str
-        option2_description: str
-        option3_description: str
-        option4_description: str
+        tool1_description: str
+        tool2_description: str
+        tool3_description: str
+        tool4_description: str
 
     OpenAI.api_key = OPENAI_API_KEY
 
@@ -68,10 +68,10 @@ def get_input(check: Check) -> Check:
     #game_info = openai_conn(''.join(i for i in conversation_archive))
     game_info = openai_conn(payload)
     #conversation_archive.append(game_info.situation_discription)
-    check.option[0] = game_info.option1_description
-    check.option[1] = game_info.option2_description
-    check.option[2] = game_info.option3_description
-    check.option[3] = game_info.option4_description
+    check.option[0] = game_info.tool1_description
+    check.option[1] = game_info.tool2_description
+    check.option[2] = game_info.tool3_description
+    check.option[3] = game_info.tool4_description
     return check
 
 def next_level(problem: Problem) -> Problem:
