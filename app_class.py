@@ -1,6 +1,15 @@
+from models import SessionDB
+
+
 class Session():
-    def __init__(self):
-        self.token = ""
+    def __init__(self, SessionDB):
+        self.token = SessionDB.token
+        self.problem_number = int(SessionDB.problem_num)
+        self.life = int(SessionDB.life)
+        self.description = SessionDB.description
+        self.option = [SessionDB.option1, SessionDB.option2, SessionDB.option3, SessionDB.option4]
+        self.result = [int(SessionDB.result1), int(SessionDB.result2), int(SessionDB.result3), int(SessionDB.result4)]
+        self.result_text = SessionDB.result_desc
 
 
 class Problem():
