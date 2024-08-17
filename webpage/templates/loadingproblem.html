@@ -124,47 +124,45 @@
             console.error("error : api not found"); //디버깅
         }
     }
-    async function checkGameLoad(){
-
+    const loadingInterval = setInterval(async () => {
         try {
-            const response = await fetch("/loaded_problem", {
+            const response = await fetch("/loaded_start", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({token:"{{token}}" })
+                body: JSON.stringify({ token: "{{token}}" })
             });
 
-            const data = response.json();
+            const data = await response.json();
+            console.log(data);
+
             const session = data.session;
             const checkLoad = data.result;
             const nextSession = data.next_session;
 
-            const loadingInterval = setInterval(()=>{
-            if(checkLoad == "true"){
-                clearInterval(loadingInterval);
+
+            if (checkLoad == "true") {
+                clearInterval(loadingInterval); // Stop the interval
                 console.log("Loading complete! Redirecting...");
+                loadGame(); // Call your load game function
+            } else if (checkLoad == "false") {
+                console.log("Loading not yet complete! Checking again...");
+                // Continue checking (the interval will repeat)
+            } else {
+                clearInterval(loadingInterval); // Stop the interval on error
+                console.error("Unexpected response! Stopping check...");
             }
-            else if(checkLoad == "false"){
-                //로딩화면 계속
-                console.log("Loading fail! Loading...");
-            }
-            else{
-                //값 못받아올 시
-                console.error("Loading fail! Redirecting...");
-                clearInterval(loadingInterval);
-            }
-        },1000);
-
+        } catch (error) {
+            clearInterval(loadingInterval); // Stop the interval on error
+            console.error("Error: API not found or request failed.");
         }
-        catch(error){
-            console.error("error : api not found"); //디버깅
-        }
-    }
+    }, 1000); // Check every 5 seconds
 
-     window.onload = function() {
-        checkGameLoad();
+
+    window.onload = function() {
         checkLoad();
+        checkGameLoad();
      };
 </script>
 </html>

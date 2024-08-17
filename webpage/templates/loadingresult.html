@@ -92,11 +92,12 @@
     </style>
 </head>
 <body>
-
-    <input type="hidden" id="token" value="{{token}}">
+    <form method="POST" action="/check">
+        <input type="hidden" id="token" value="{{token}}">
+    </form>
 
     <section class="loding">
-        <h1 class="loading-title" style="margin-top:250px">게임 로딩중....</h1>
+        <h1 class="loading-title" style="margin-top:250px">결과 로딩중....</h1>
         <div class="progress-bar" aria-hidden="true">
              <span class="progress-bar-guge"></span>
         </div>
@@ -123,47 +124,45 @@
             console.error("error : api not found"); //디버깅
         }
     }
-    async function checkGameLoad(){
 
+    const loadingInterval = setInterval(async () => {
         try {
-            const response = await fetch("/loaded_result", {
+            const response = await fetch("/loaded_start", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({token: "{{ token }}"})
+                body: JSON.stringify({ token: "{{token}}" })
             });
 
-            const data = response.json();
+            const data = await response.json();
+            console.log(data);
+
             const session = data.session;
             const checkLoad = data.result;
             const lived = data.lived;
 
-            const loadingInterval = setInterval(()=>{
-            if(checkLoad == "true"){
-                clearInterval(loadingInterval);
+            if (checkLoad == "true") {
+                clearInterval(loadingInterval); // Stop the interval
                 console.log("Loading complete! Redirecting...");
+                loadGame(); // Call your load game function
+            } else if (checkLoad == "false") {
+                console.log("Loading not yet complete! Checking again...");
+                // Continue checking (the interval will repeat)
+            } else {
+                clearInterval(loadingInterval); // Stop the interval on error
+                console.error("Unexpected response! Stopping check...");
             }
-            else if(checkLoad == "false"){
-                //로딩화면 계속
-                console.log("Loading fail! Loading...");
-            }
-            else{
-                //값 못받아올 시
-                console.error("Loading fail! Redirecting...");
-                clearInterval(loadingInterval);
-            }
-        },1000);
+        } catch (error) {
+            clearInterval(loadingInterval); // Stop the interval on error
+            console.error("Error: API not found or request failed.");
+        }
+    }, 1000);
 
-        }
-        catch(error){
-            console.error("error : api not found"); //디버깅
-        }
-    }
 
      window.onload = function() {
-        checkGameLoad();
         checkLoad();
+        checkGameLoad();
      };
 </script>
 </html>
