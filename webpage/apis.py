@@ -15,16 +15,15 @@ apis = Blueprint('apis', __name__)
 app  = apis
 
 class StartWorker():
-    def __init__(self, token, sess):
+    def __init__(self, token):
         self.token = token
-        self.sess = sess
 
     def run(self):
         global api_loaded_start
-        session = create_session(token=self.token, problem_num=1, life=100, localsession=self.sess)
+        session = create_session(token=self.token, problem_num=1, life=100)
         nextset = gpt.start_game(Problem(session)).to_session_db()
 
-        update_session_db_ses(nextset, localsession=self.sess)
+        update_session_db_ses(nextset)
 
         api_loaded_start[self.token] = {
             'session': self.token,
@@ -40,22 +39,21 @@ class StartWorker():
         except: pass
         
 class ProblemWorker():
-    def __init__(self, token, sess):
+    def __init__(self, token):
         self.token = token
-        self.sess = sess
 
     def run(self):
         global api_loaded_problem
-        bef_session = read_session_db(token=self.token, localsession=self.sess)
+        bef_session = read_session_db(token=self.token)
 
         session = create_session(token=make_session_text(),
                                  problem_num=bef_session.problem_num+1,
-                                 life=bef_session.life, localsession=self.sess)
-        delete_session_db(bef_session, localsession=self.sess)
+                                 life=bef_session.life)
+        delete_session_db(bef_session)
 
         nextset = gpt.start_game(Problem(session)).to_session_db()
 
-        update_session_db_ses(nextset, localsession=self.sess)
+        update_session_db_ses(nextset)
 
         api_loaded_problem[self.token] = {
 			'session': self.token,
@@ -72,14 +70,13 @@ class ProblemWorker():
         except: pass
         
 class ResultWorker():
-    def __init__(self, token, select_number, sess):
+    def __init__(self, token, select_number):
         self.token = token
         self.select_number = select_number
-        self.sess = sess
 
     def run(self):
         global api_loaded_result
-        session = read_session_db(token=self.token, localsession=self.sess)
+        session = read_session_db(token=self.token)
         result  = gpt.get_input(Check(session, self.select_number))
 
         result.life -= lose_life_calc(result.result, self.select_number)
@@ -89,7 +86,7 @@ class ResultWorker():
         else:
             lived = 'true'
 
-        update_session_db_ses(result, localsession=self.sess)
+        update_session_db_ses(result)
         
         api_loaded_result[self.token] = {
 			'session': self.token,

@@ -57,18 +57,26 @@ class Session():
 
 class Problem(Session):
     def __init__(self, session: Session):
-        super().__init__(session.to_session_db())
+        if type(session) != SessionDB:
+            session = session.to_session_db()
+        super().__init__(session)
 
 class Check(Session):
     def __init__(self, session: Session, select_number: int):
-        super().__init__(session.to_session_db())
+        if type(session) != SessionDB:
+            session = session.to_session_db()
+        super().__init__(session)
         self.select_number = select_number
 
 
 class Start(Session):
     def __init__(self, session: Session):
-        super().__init__(session.to_session_db())
+        if type(session) != SessionDB:
+            session = session.to_session_db()
+        super().__init__(session)
 
 class Gameover(Session):
     def __init__(self, session: Session):
-        super().__init__(session.to_session_db())
+        if type(session) != SessionDB:
+            session = session.to_session_db()
+        super().__init__(session)

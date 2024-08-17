@@ -1,7 +1,7 @@
 from . import db
 
 class SessionDB(db.Model):
-    token        = db.Column(db.String(64), primary_key=True)
+    token        = db.Column(db.String(80), primary_key=True)
     problem_num  = db.Column(db.Integer)
     life         = db.Column(db.Integer)
     description  = db.Column(db.Text)
