@@ -109,13 +109,14 @@
     </script>
     <script>
 
+      let gameWindow = window ;
       function startGame(){
         // const sessionId = generateRandomString(10);
         document.getElementById('gameForm').submit();
       }
 
       function endGame(){
-        window.close();
+        gameWindow.close();
       }
     </script>
   </body>
