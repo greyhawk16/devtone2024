@@ -59,19 +59,18 @@ class Session():
     
 
 class Problem():
-    def __init__(self, Session, select_number):
+    def __init__(self, Session):
         self.problem_num = Session.problem_num
         self.life = Session.life
         self.image_url = ""
         self.description = Session.description
         self.option = Session.option
         self.token = Session.token
-        self.select_number = select_number
         self.conv_archive = Session.conv_archive
         self.image_num = Session.image_num
 
 class Check():
-    def __init__(self, Session):
+    def __init__(self, Session, select_number):
         self.problem_num = Session.problem_num
         self.life = Session.life
         self.result_all = False
@@ -82,6 +81,7 @@ class Check():
         self.result = Session.result
         self.conv_archive = Session.conv_archive
         self.image_num = Session.image_num
+        self.select_number = select_number
 
 class Start():
     def __init__(self, Session):
