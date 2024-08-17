@@ -13,19 +13,16 @@ class Session():
         self.conv_archive = SessionDB.conv_archive
         self.image_num = SessionDB.image_num
 
-    @staticmethod
-    def create(token, problem_num, life, description, option, result, result_text, conv_archive, image_num):
-        return Session(
-            token = token,
-            problem_num = problem_num,
-            life = life,
-            description = description,
-            option = [option[0], option[1], option[2], option[3]],
-            result = [result[0], result[1], result[2], result[3]],
-            result_text = result_text,
-            conv_archive = conv_archive,
-            image_num = image_num
-        )
+    def create(self, token, problem_num, life, description, option, result, result_text, conv_archive, image_num):
+        self.token = token,
+        self.problem_num = problem_num,
+        self.life = life,
+        self.description = description,
+        self.option = [option[0], option[1], option[2], option[3]],
+        self.result = [result[0], result[1], result[2], result[3]],
+        self.result_text = result_text,
+        self.conv_archive = conv_archive,
+        self.image_num = image_num
 
     def update(self, SessionDB):
         self.token = SessionDB.token

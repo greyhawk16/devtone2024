@@ -4,25 +4,27 @@ from flask_sqlalchemy import SQLAlchemy
 from webpage.app_tools import make_session_text, create_session, read_session, read_session_db
 from webpage.app_tools import update_session_db, delete_session_db, lose_life_calc, update_session_db_ses
 from webpage.models import SessionDB
-from webpage.app_class import Session, Problem, Check, Start, Gameover
+from webpage.app_class import Problem, Check, Start, Gameover
 from webpage import api_loaded_start, api_loaded_problem, api_loaded_result
 import webpage.gpt as gpt
 import threading
+from . import db
+from sqlalchemy.orm import scoped_session, sessionmaker, Session
 
 apis = Blueprint('apis', __name__)
 app  = apis
 
-class StartWorker(threading.Thread):
-    def __init__(self, token):
-        super().__init__()
+class StartWorker():
+    def __init__(self, token, sess):
         self.token = token
+        self.sess = sess
 
     def run(self):
         global api_loaded_start
-        session = create_session(token=self.token, problem_num=1, life=100)
+        session = create_session(token=self.token, problem_num=1, life=100, localsession=self.sess)
         nextset = gpt.start_game(Problem(session)).to_session_db()
 
-        update_session_db_ses(nextset)
+        update_session_db_ses(nextset, localsession=self.sess)
 
         api_loaded_start[self.token] = {
             'session': self.token,
@@ -31,28 +33,29 @@ class StartWorker(threading.Thread):
 
         global api_loaded_problem
         global api_loaded_result
+
         try: del api_loaded_result[self.token]
         except: pass
         try: del api_loaded_problem[self.token]
         except: pass
         
-class ProblemWorker(threading.Thread):
-    def __init__(self, token):
-        super().__init__()
+class ProblemWorker():
+    def __init__(self, token, sess):
         self.token = token
+        self.sess = sess
 
     def run(self):
         global api_loaded_problem
-        bef_session = read_session_db(token=self.token)
+        bef_session = read_session_db(token=self.token, localsession=self.sess)
 
         session = create_session(token=make_session_text(),
                                  problem_num=bef_session.problem_num+1,
-                                 life=bef_session.life)
-        delete_session_db(bef_session)
+                                 life=bef_session.life, localsession=self.sess)
+        delete_session_db(bef_session, localsession=self.sess)
 
         nextset = gpt.start_game(Problem(session)).to_session_db()
 
-        update_session_db_ses(nextset)
+        update_session_db_ses(nextset, localsession=self.sess)
 
         api_loaded_problem[self.token] = {
 			'session': self.token,
@@ -62,20 +65,21 @@ class ProblemWorker(threading.Thread):
         
         global api_loaded_start
         global api_loaded_result
+        
         try: del api_loaded_result[self.token]
         except: pass
         try: del api_loaded_start[self.token]
         except: pass
         
-class ResultWorker(threading.Thread):
-    def __init__(self, token, select_number):
-        super().__init__()
+class ResultWorker():
+    def __init__(self, token, select_number, sess):
         self.token = token
         self.select_number = select_number
+        self.sess = sess
 
     def run(self):
         global api_loaded_result
-        session = read_session_db(token=self.token)
+        session = read_session_db(token=self.token, localsession=self.sess)
         result  = gpt.get_input(Check(session, self.select_number))
 
         result.life -= lose_life_calc(result.result, self.select_number)
@@ -85,7 +89,7 @@ class ResultWorker(threading.Thread):
         else:
             lived = 'true'
 
-        update_session_db_ses(result)
+        update_session_db_ses(result, localsession=self.sess)
         
         api_loaded_result[self.token] = {
 			'session': self.token,
@@ -95,11 +99,11 @@ class ResultWorker(threading.Thread):
         
         global api_loaded_start
         global api_loaded_problem
+        
         try: del api_loaded_result[self.token]
         except: pass
         try: del api_loaded_problem[self.token]
         except: pass
-
 
 @app.route('/loadingstart', methods=['POST'])
 def loadingstart():
@@ -109,9 +113,6 @@ def loadingstart():
             'session': token,
             'result':  "false",
 	    }
-    t = StartWorker(token)
-    t.start()
-
     return render_template("loadingstart.html", token=token)
 
 @app.route('/loadingproblem', methods=['POST'])
@@ -123,12 +124,12 @@ def loadingproblem():
 		    'result': "false",
 		    'next_session': "",
 	    }
-    t = ProblemWorker(token)
     return render_template("loadingproblem.html", token=token)
 
 @app.route('/loadingresult', methods=['POST'])
 def loadingresult():
     global api_loaded_result
+    
     token = request.form['token']
     select_number = request.form['select_number']
     api_loaded_result[token] = {
@@ -136,6 +137,24 @@ def loadingresult():
 		    'result': 'false',
 		    'lived': 'true'
 	    }
-    t = ResultWorker(token, select_number)
     return render_template("loadingresult.html", token=token)
 
+
+@app.route('/loaded_start_action', methods=['POST'])
+def loaded_start():
+    token = request.json['token']
+    StartWorker(token).run()
+    return jsonify({"result": "true"})
+
+@app.route('/loaded_problem_action', methods=['POST'])
+def loaded_problem():
+    token = request.json['token']
+    ProblemWorker(token).run()
+    return jsonify({"result": "true"})
+
+@app.route('/loaded_result_action', methods=['POST'])
+def loaded_result():
+    token = request.json['token']
+    select_number = request.json['select_number']
+    ResultWorker(token, select_number).run()
+    return jsonify({"result": "true"})
