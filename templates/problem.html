@@ -50,10 +50,19 @@
                     type="radio"
                     class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#1C160C] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#1C160C]"
                     name="select_number"
-                    value="1"
+                    value="0"
                     checked=""
                   />
-                  <div class="flex grow flex-col"><p class="text-[#1C160C] text-sm font-medium leading-normal">{{ option_1 }}</p></div>
+                  <div class="flex grow flex-col"><p class="text-[#1C160C] text-sm font-medium leading-normal">{{ option[0] }}</p></div>
+                </label>
+                <label class="flex items-center gap-4 rounded-xl border border-solid border-[#E9DFCE] p-[15px]">
+                  <input
+                    type="radio"
+                    class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#1C160C] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#1C160C]"
+                    name="select_number"
+                    value="1"
+                  />
+                  <div class="flex grow flex-col"><p class="text-[#1C160C] text-sm font-medium leading-normal">{{ option[1] }}</p></div>
                 </label>
                 <label class="flex items-center gap-4 rounded-xl border border-solid border-[#E9DFCE] p-[15px]">
                   <input
@@ -62,7 +71,7 @@
                     name="select_number"
                     value="2"
                   />
-                  <div class="flex grow flex-col"><p class="text-[#1C160C] text-sm font-medium leading-normal">{{ option_2 }}</p></div>
+                  <div class="flex grow flex-col"><p class="text-[#1C160C] text-sm font-medium leading-normal">{{ option[2] }}</p></div>
                 </label>
                 <label class="flex items-center gap-4 rounded-xl border border-solid border-[#E9DFCE] p-[15px]">
                   <input
@@ -71,16 +80,7 @@
                     name="select_number"
                     value="3"
                   />
-                  <div class="flex grow flex-col"><p class="text-[#1C160C] text-sm font-medium leading-normal">{{ option_3 }}</p></div>
-                </label>
-                <label class="flex items-center gap-4 rounded-xl border border-solid border-[#E9DFCE] p-[15px]">
-                  <input
-                    type="radio"
-                    class="h-5 w-5 border-2 border-[#E9DFCE] bg-transparent text-transparent checked:border-[#1C160C] checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-[#1C160C]"
-                    name="select_number"
-                    value="4"
-                  />
-                  <div class="flex grow flex-col"><p class="text-[#1C160C] text-sm font-medium leading-normal">{{ option_4 }}</p></div>
+                  <div class="flex grow flex-col"><p class="text-[#1C160C] text-sm font-medium leading-normal">{{ option[3] }}</p></div>
                 </label>
               </div>
               <input type="hidden" id="token" name="token" value="{{ token }}">
