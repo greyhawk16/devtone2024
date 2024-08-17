@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="keyword" content="BoB, ChatGPT, AI, Game, Survival">
+    <meta name="description" content="밥에서 살아남기">
+    <meta name="author" content="이재준, 박정식, 심수민, 양준헌">
+    <meta property="og:title" content="밥에서 살아남기">
+    <meta property="og:description" content="운 좋게도 생존하셨습니다!">
+    <meta property="og:image" content="thumbnail.png">
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css"/>
+    <title>loading</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+        .loading{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 500px;
+            height:220px;
+        }
+
+        .loading-title{
+            font-size:30px;
+            font-weight: 400;
+            line-height: 1.3333333333;
+            color: #151B26;
+            text-align: center;
+            animation-name: flicker;
+            animation-duration: 1600ms;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            margin-bottom: 20px;
+        }
+        .progress-bar{
+            width: 300px;
+            height: 12px;
+            background-color: #e5eaef;
+            border-radius: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-bar-guge{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 12px;
+            border-radius: 100px;
+            background-color: #13CE66;
+            animation-name: loading-bar;
+            animation-duration: 1600ms;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-out;
+        }
+
+        @keyframes flicker{
+            from{
+                opacity: 1;
+            }
+            to{
+                opacity: 0;
+            }
+        }
+
+        @keyframes loading-bar{
+            0% {
+                width: 0;
+                opacity: 0;
+            }
+            90%{
+                width: 100%;
+                opacity: 1;
+            }
+            100%{
+                width: 100%;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" id="loadinggame" action="/problem">
+        <input type="hidden" id="token" value="{{token}}">
+    </form>
+
+    <section class="loding">
+        <h1 class="loading-title" style="margin-top:250px">게임 로딩중....</h1>
+        <div class="progress-bar" aria-hidden="true">
+             <span class="progress-bar-guge"></span>
+        </div>
+    </section>
+</body>
+<script>
+    async function checkLoad() {
+        try {
+            const response = await fetch("/loaded_start_action", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({token: "{{token}}", "seclect_num": "{{select_num}}"})
+            });
+            const data = response.json();
+            console.log(data)
+
+            const session = data.session;
+            const checkLoad = data.result;
+
+        } catch (error) {
+            console.error("error : api not found"); //디버깅
+        }
+
+        async function checkGameLoad() {
+            const token = document.getElementById("token").value;
+            try {
+                const response = await fetch("/loaded_start", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({token: "{{token}}"})
+                });
+
+                const data = response.json();
+                console.log(data)
+
+                const session = data.session;
+                const checkLoad = data.result;
+
+
+                const loadingInterval = setInterval(() => {
+                    if (checkLoad == "true") {
+                        clearInterval(loadingInterval);
+                        console.log("Loading complete! Redirecting...");
+                        loadGame();
+                    } else if (checkLoad == "false") {
+                        //로딩화면 계속
+                        console.log("Loading fail! Loading...");
+                    } else {
+                        //값 못받아올 시
+                        console.error("Loading fail! Redirecting...");
+                        clearInterval(loadingInterval);
+                    }
+                }, 1000);
+
+            } catch (error) {
+                console.error("error : api not found"); //디버깅
+            }
+        }
+
+        function loadGame() {
+            // const sessionId = generateRandomString(10);
+            document.getElementById('loadinggame').submit();
+        }
+
+        window.onload = function () {
+            checkGameLoad();
+        };
+    }
+</script>
+</html>
