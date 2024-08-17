@@ -28,14 +28,18 @@
             <h1 class="text-black font-nomal text-6xl font-bold leading-normal pb-3 tp-1 px-4 text-center">GAME OVER</h1>
             <p class="text-black text-base font-normal leading-normal pb-3 pt-1 px-4 text-center">{{ result_text }}</p>
             <p class="text-3xl">&nbsp;</p>
+            <p class="text-black text-base font-normal leading-normal pb-3 pt-1 px-4 text-center">{{ problem_number }}번째 상황에서 사망하셨습니다.</p>
             <div class="flex justify-center">
               <div class="flex flex-1 gap-3 flex-wrap px-4 py-3 max-w-[480px] justify-center">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-[#1C160C] text-[#FFFFFF] text-base font-bold leading-normal tracking-[0.015em] grow"
-                  onclick="location.href = 'loadingstart';"
-                  >
-                  <span class="truncate">다시하기</span>
-                </button>
+                <form action="loadingstart" name="submit_form" method="post" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-[#1C160C] text-[#FFFFFF] text-base font-bold leading-normal tracking-[0.015em] grow"
+                >
+                  <input type="hidden" id="token" name="token" value="{{ token }}">
+                  <button
+                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-[#1C160C] text-[#FFFFFF] text-base font-bold leading-normal tracking-[0.015em] grow"
+                    >
+                    <span class="truncate">다시하기</span>
+                  </button>
+                </form>
                 <button
                   class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-[#EEEEEE] text-[#1C160C] text-base font-bold leading-normal tracking-[0.015em] grow"
                   onclick="location.href = 'start';"
