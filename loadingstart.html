@@ -122,7 +122,7 @@
         } catch (error) {
             console.error("error : api not found"); //디버깅
         }
-
+    }
         async function checkGameLoad() {
             const token = document.getElementById("token").value;
             try {
@@ -168,7 +168,7 @@
 
         window.onload = function () {
             checkGameLoad();
+            checkLoad();
         };
-    }
 </script>
 </html>
