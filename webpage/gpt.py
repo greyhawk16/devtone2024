@@ -4,21 +4,21 @@ import dotenv
 import os
 import csv
 import random
-from app_class import Problem, Check, Session
+from .app_class import Problem, Check, Session
 
 dotenv.load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 conversation_archive = []
 
 situations_list = []
-with open('situation_data.csv', 'r', encoding='utf-8') as file:
+with open('./webpage/situation_data.csv', 'r', encoding='utf-8') as file:
     reader = csv.reader(file)
     for row in reader:
         situations_list.append(row[0])
     file.close()
 
 items_list = []
-with open('items_data.csv', 'r', encoding='utf-8') as file:
+with open('./webpage/items_data.csv', 'r', encoding='utf-8') as file:
     reader = csv.reader(file)
     for row in reader:
         items_list.append(row[0])
