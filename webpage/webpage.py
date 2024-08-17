@@ -23,7 +23,7 @@ def problem():
     session         = read_session(token)
     problem_number  = str(session.problem_num)
     life            = str(session.life)
-    image_url       = f"dataimg/img{session.image_num}.png"
+    image_url       = f"dataimg/img_{session.image_num}.png"
     description     = session.description
     option          = session.option
     
