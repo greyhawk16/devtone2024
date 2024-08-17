@@ -92,8 +92,8 @@
     </style>
 </head>
 <body>
-    <form method="POST" action="/check">
-        <input type="hidden" id="token" value="{{token}}">
+     <form method="POST" id="loadingcheck" action="/check">
+        <input type="hidden" id="token" name="token" value="{{token}}">
     </form>
 
     <section class="loding">
@@ -127,7 +127,7 @@
 
     const loadingInterval = setInterval(async () => {
         try {
-            const response = await fetch("/loaded_start", {
+            const response = await fetch("/loaded_result", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -158,7 +158,10 @@
             console.error("Error: API not found or request failed.");
         }
     }, 1000);
-
+     function loadGame() {
+            // const sessionId = generateRandomString(10);
+            document.getElementById('loadingcheck').submit();
+        }
 
      window.onload = function() {
         checkLoad();
