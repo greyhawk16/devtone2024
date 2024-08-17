@@ -63,9 +63,6 @@ def start_game(problem: Problem) -> Problem:
     problem.option[3] = selectable_items[3]
     conversation_archive.append(payload)
     conversation_archive.append(game_info.situation_discription)
-    #result = openai_conn(payload).situation_discription
-    #conversation_archive.append(payload)
-    #conversation_archive.append(result)
     return problem
 
 def get_input(check: Check) -> Check:
