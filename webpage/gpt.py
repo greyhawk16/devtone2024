@@ -8,7 +8,6 @@ from .app_class import Problem, Check, Session
 
 dotenv.load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-conversation_archive = []
 
 situations_list = []
 with open('./webpage/situation_data.csv', 'r', encoding='utf-8') as file:
@@ -59,15 +58,16 @@ def start_game(problem: Problem) -> Problem:
     problem.option[1] = selectable_items[1]
     problem.option[2] = selectable_items[2]
     problem.option[3] = selectable_items[3]
-    conversation_archive.append(payload)
-    conversation_archive.append(game_info.situation_discription)
+    #conversation_archive.append(payload)
+    #conversation_archive.append(game_info.situation_discription)
     return problem
 
 def get_input(check: Check) -> Check:
     payload = f"{check.select_number}, 각 선택지에 따른 생존 확률과, 플레이어의 선택에 따른 결과를 말해 주십시오."
-    conversation_archive.append(payload)
-    game_info = openai_conn(''.join(i for i in conversation_archive))
-    conversation_archive.append(game_info.situation_discription)
+    #conversation_archive.append(payload)
+    #game_info = openai_conn(''.join(i for i in conversation_archive))
+    game_info = openai_conn(payload)
+    #conversation_archive.append(game_info.situation_discription)
     check.option[0] = game_info.option1_description
     check.option[1] = game_info.option2_description
     check.option[2] = game_info.option3_description
@@ -78,9 +78,9 @@ def next_level(problem: Problem) -> Problem:
     problem.problem_number += 1
     selectable_items = random.sample(items_list, k=4)
     payload = f"이어지는 상황에 기존의 선택지 대신에 다음 4개의 {selectable_items}들을 제시해주십시오."
-    conversation_archive.append(payload)
-    game_info = openai_conn(''.join(i for i in conversation_archive))
-
+    #conversation_archive.append(payload)
+    #game_info = openai_conn(''.join(i for i in conversation_archive))
+    game_info = openai_conn(payload)
     problem.life = game_info.player_life
     problem.description = game_info.situation_discription
     problem.option[0] = selectable_items[0]
@@ -89,5 +89,5 @@ def next_level(problem: Problem) -> Problem:
     problem.option[3] = selectable_items[3]
     #result = openai_conn(''.join(i for i in conversation_archive)).situation_discription
     #conversation_archive.append(result)
-    conversation_archive.append(game_info.situation_discription)
+    #conversation_archive.append(game_info.situation_discription)
     return problem
