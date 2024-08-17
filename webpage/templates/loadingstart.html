@@ -92,7 +92,9 @@
     </style>
 </head>
 <body>
-    <input type="hidden" id="token" value="{{token}}">
+    <form method="POST" id="loadinggame" action="/problem">
+        <input type="hidden" id="token" value="{{token}}">
+    </form>
 
     <section class="loding">
         <h1 class="loading-title" style="margin-top:250px">게임 로딩중....</h1>
@@ -107,10 +109,10 @@
         try {
             const response = await fetch("/loaded_start", {
                 method: 'POST',
-                headers: {
+                headers:{
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({token: "{{ token }}"})
+                body:JSON.stringify({token: "{{token}}"})
             });
 
             const data = response.json();
@@ -123,6 +125,7 @@
             if(checkLoad == "true"){
                 clearInterval(loadingInterval);
                 console.log("Loading complete! Redirecting...");
+                loadGame();
             }
             else if(checkLoad == "false"){
                 //로딩화면 계속
@@ -140,9 +143,12 @@
             console.error("error : api not found"); //디버깅
         }
     }
+    function loadGame(){
+        // const sessionId = generateRandomString(10);
+        document.getElementById('loadinggame').submit();
+    }
 
      window.onload = function() {
-        setTimeout(1000);
         checkGameLoad();
      };
 </script>
