@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="/static/img/favicon.png">
     <meta name="keyword" content="BoB, ChatGPT, AI, Game, Survival">
     <meta name="description" content="밥에서 살아남기">
     <meta name="author" content="이재준, 박정식, 심수민, 양준헌">
@@ -92,8 +92,8 @@
     </style>
 </head>
 <body>
-    <form method="POST" action="/check">
-        <input type="hidden" id="token" value="{{token}}">
+     <form method="POST" id="loadingcheck" action="/check">
+        <input type="hidden" id="token" name="token" value="{{token}}">
     </form>
 
     <section class="loding">
@@ -127,7 +127,7 @@
 
     const loadingInterval = setInterval(async () => {
         try {
-            const response = await fetch("/loaded_start", {
+            const response = await fetch("/loaded_result", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -158,7 +158,10 @@
             console.error("Error: API not found or request failed.");
         }
     }, 1000);
-
+     function loadGame() {
+            // const sessionId = generateRandomString(10);
+            document.getElementById('loadingcheck').submit();
+        }
 
      window.onload = function() {
         checkLoad();
