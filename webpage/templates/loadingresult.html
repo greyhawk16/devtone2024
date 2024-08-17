@@ -8,7 +8,7 @@
     <meta name="author" content="이재준, 박정식, 심수민, 양준헌">
     <meta property="og:title" content="밥에서 살아남기">
     <meta property="og:description" content="운 좋게도 생존하셨습니다!">
-    <meta property="og:image" content="/static/img/thumbnail.png">
+    <meta property="og:image" content="thumbnail.png">
     <link
       rel="stylesheet"
       as="style"
@@ -160,6 +160,7 @@
     }, 1000);
      function loadGame() {
             // const sessionId = generateRandomString(10);
+            document.getElementById('loadingcheck').innerText+="<input type=\"hidden\" id=\"lived\" name=\"lived\" value="+lived+">"
             document.getElementById('loadingcheck').submit();
         }
 
